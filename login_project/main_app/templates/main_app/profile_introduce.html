@@ -1,0 +1,35 @@
+{% extends "main_app/profile.html"%}
+{% load staticfiles %}
+
+{% block profile_content %}
+<br>
+パス名 from profile_introduce.html :{{ request.path }}
+<br>
+受け渡したプロジェクト名: {{ send_to_html_project }}
+
+{% ifequal key_value_upload 1 %}
+<div class="alert alert-dismissible alert-primary">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    アップロードに成功しました
+</div>
+{% endifequal %}
+{% ifequal key_value_upload -1 %}
+<div class="alert alert-dismissible alert-primary">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    アップロードに失敗しました
+</div>
+{% endifequal %}
+
+<h4>アップロードフォーム</h4>
+<br>
+<form action="{% url 'main_app:uploading' send_to_html_project %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="file">
+    <input type="submit" class="btn btn-primary btn-rounded btn-sm my-0" value="アップロード">
+</form>
+<hr>
+{% include 'main_app/show_db_record.html' %}
+
+{% endblock%}
+
+

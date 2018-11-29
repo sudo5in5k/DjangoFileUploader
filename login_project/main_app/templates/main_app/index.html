@@ -1,0 +1,22 @@
+{% extends "main_app/base.html" %}
+{% block content %}
+<!-- if u logged in, show pop-up of success message-->
+{% if messages %}
+{%for message in messages %}
+<div class="alert alert-dismissible alert-primary">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>{{ message }}</strong>
+</div>
+{% endfor %}
+{% endif %}
+
+<h2>アプリ配信サイトの説明</h2>
+<hr class="my-4">
+<p class="lead">Home: トップ画面です</p>
+<hr class="my-4">
+<p class="lead">Profile: ログイン後、確認可能な画面です</p>
+<hr class="my-4">
+<p class="lead">Login: ログイン画面です</p>
+<hr class="my-4">
+<p class="lead">Register: ユーザ登録画面です</p>
+{% endblock %}

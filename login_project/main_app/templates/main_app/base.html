@@ -1,0 +1,94 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+
+    <title>アプリ配信サイト</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href='{% static "bootstrap/css/bootstrap.min.css" %}' rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href='{% static "bootstrap/css/ie10-viewport-bug-workaround.css" %}' rel="stylesheet">
+
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+    <link href='{% static "bootstrap/css/custom_css/custom.css" %}' rel="stylesheet">
+
+</head>
+<body>
+<!-- Added navbar by Bootswatch. Theme: Jet black and electric blue (https://bootswatch.com/cyborg/) -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="">アプリ配信サイト</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
+                aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item {% ifequal request.path '/' %}active{% endifequal %}">
+                    <a class="nav-link" href="{% url 'main_app:index' %}">Home</a>
+                </li>
+                <li class="nav-item {% ifequal request.path '/user_profile/' %}active{% endifequal %}">
+                    <a class="nav-link" href="{% url 'main_app:profile' %}">Profile</a>
+                </li>
+                <!-- if user is logged in, show logout tab instead of login tab-->
+                {% if user.is_authenticated %}
+                <li class="nav-item {% ifequal request.path '/user_logout/' %}active{% endifequal %}">
+                    <a class="nav-link" href="{% url 'main_app:logout' %}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item {% ifequal request.path '/user_login/' %}active{% endifequal %}">
+                    <a class="nav-link" href="{% url 'main_app:login' %}">Login</a>
+                </li>
+                {% endif %}
+                <li class="nav-item {% ifequal request.path '/user_register/' %}active{% endifequal %}">
+                    <a class="nav-link" href="{% url 'main_app:register' %}">Register</a>
+                </li>
+            </ul>
+        </div>
+        <a class="navbar-brand" style="color:#fff">
+            {% if user.is_authenticated %}
+            ようこそ {{ user.username }}
+            {% endif %}
+        </a>
+    </div>
+</nav>
+
+<!-- main content -->
+<div class="content">
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+
+<!-- footer: Footer was only set for id so that "footerFixed.js" related to fix position under is needed to use id-->
+<div id="footer">
+    <div class="container">
+        <div class="col-lg-12" style="padding-top: 20px; color:#fff;">
+            <p>Made by <a href="mailto:sh-ushikubo@kddi.com">Sho Ushikubo</a>.</p>
+            <p>Code released under the <a href="https://github.com/thomaspark/bootswatch/blob/master/LICENSE">MIT
+                License</a>.</p>
+            <p>Based on <a href="https://getbootstrap.com" rel="nofollow">Bootstrap</a>. Icons from <a
+                    href="http://fontawesome.io/" rel="nofollow">Font Awesome</a>. Web fonts from <a
+                    href="https://fonts.google.com/" rel="nofollow">Google</a>.</p>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- footer fixing under -->
+<script type="text/javascript" src="{% static 'bootstrap/js/custom_js/footerFixed.js' %}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+
+</body>
+</html>

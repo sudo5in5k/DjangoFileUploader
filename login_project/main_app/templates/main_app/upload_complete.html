@@ -1,0 +1,15 @@
+{% extends "main_app/profile_introduce.html"%}
+
+{% block profile_content %}
+<br>
+パス名 from profile_introduce.html :{{ request.path }}
+<br>
+受け渡したプロジェクト名: {{ send_to_html_project }}
+<form action="{% url 'main_app:uploading' send_to_html_project %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="file">
+    <input type="submit" value="アップロード">
+</form>
+
+
+{% endblock%}

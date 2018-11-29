@@ -1,0 +1,12 @@
+web:
+  build: .
+  container_name: django_nginx_gunicorn
+  ports:
+    - "80:80"
+  volumes:
+    - ./login_project:/usr/src/app/login_project
+    - ./login_project/static/:/usr/src/app/login_project/static
+  expose:
+      - "8000"
+      - "80"
+  tty: true

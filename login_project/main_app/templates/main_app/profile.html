@@ -1,0 +1,35 @@
+{% extends "main_app/base.html" %}
+{% block content %}
+{% if group_flag and user.is_authenticated %}
+
+<div class="row row-offcanvas row-offcanvas-right">
+
+    <div class="col-12 col-md-9">
+        {% ifequal request.path '/user_profile/' %}
+        右のプロジェクト欄から選択して下さい
+        {% endifequal %}
+        {% block profile_content %}
+        {% endblock %}
+    </div><!--/span-->
+
+    <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
+        <ul class="list-group">
+            {% for group in group_list %}
+            <a href="/user_profile/project/{{group}}/" class="list-group-item active" style="margin-bottom:2px;">
+                {{group}}</a>
+            {% endfor %}
+        </ul>
+    </div><!--/span-->
+</div><!--/row-->
+
+{% else %}
+<div class="container">
+    <p class="lead">ログイン後確認可能です</p>
+    <p class="lead">下のボタンを押してログインして下さい</p>
+    <p class="lead">
+        <a class="btn btn-primary btn-lg" href="{% url 'main_app:login' %}" role="button">ログイン</a>
+    </p>
+</div>
+{% endif %}
+
+{% endblock %}

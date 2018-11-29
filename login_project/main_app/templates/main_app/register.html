@@ -1,0 +1,65 @@
+{% extends "main_app/base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+        <div class="panel panel-default">
+            {% if messages %}
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+            {% endif %}
+            <div class="panel-heading">
+                <h3 class="panel-title">ユーザ登録</h3>
+            </div>
+            <div class="panel-body">
+
+                <form action="{% url 'main_app:register_save' %}" method="POST">
+
+                    <div class="form-group">
+                        {{ form.username }}
+                        {{ form.username.errors }}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="form-group">
+                                {{ form.password1 }}
+                                {{ form.password1.errors }}
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="form-group">
+                                {{ form.password2 }}
+                                {{ form.password2.errors }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="form-group">
+                                {{ form.first_name }}
+                                {{ form.first_name.errors }}
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="form-group">
+                                {{ form.last_name }}
+                                {{ form.last_name.errors }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.email }}
+                        {{ form.email.errors }}
+                    </div>
+
+                    <input type="submit" class="btn btn-success btn-lg btn-block" value="登録">
+                    {% csrf_token %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

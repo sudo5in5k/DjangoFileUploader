@@ -1,0 +1,57 @@
+{% load staticfiles %}
+<head>
+    <link href='{% static "bootstrap/css/custom_css/uploaded_table.css" %}' rel="stylesheet">
+</head>
+
+<body>
+<div class="uploader_to_query">
+    <h4>アップロード済みデータ一覧</h4>
+    <table class="table table-bordered table-hover">
+        <!--Table head-->
+        <thread>
+            <tr class="table-active">
+                <th>タイトル</th>
+                <th class="">サイズ [byte]</th>
+                <th class="">更新日時</th>
+                <th class="">ダウンロード</th>
+                {% if user.is_staff %}
+                <th class="">削除</th>
+                {% endif %}
+            </tr>
+        </thread>
+
+        <tbody>
+        {% for title, path, size, time in query_sets %}
+        <tr>
+            <td>{{ title }}</td>
+            <td>{{ size }}</td>
+            <td>{{ time }}</td>
+            <form action="{% url 'main_app:handle_button' send_to_html_project %}" method="POST"
+                  enctype="application/x-www-form-urlencoded">
+                {% csrf_token %}
+                <td>
+                    <input type="submit" class="btn btn-primary btn-rounded btn-sm my-0" value="ダウンロード">
+                    <input type="hidden" name="download_button" value="{{title}}">
+                </td>
+            </form>
+            {% if user.is_staff %}
+            <form action="{% url 'main_app:handle_button' send_to_html_project %}" method="POST"
+                  enctype="application/x-www-form-urlencoded">
+                {% csrf_token %}
+                <td>
+                    <input type="submit" class="btn btn-primary btn-rounded btn-sm my-0" value="削除">
+                    <input type="hidden" name="delete_button" value="{{title}}">
+                </td>
+            </form>
+            {% endif %}
+        </tr>
+        </tbody>
+        {% empty %}
+        <div class="alert alert-dismissible alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <p>ファイルがアップロードされていません</p>
+        </div>
+        {% endfor %}
+    </table>
+</div>
+</body>
